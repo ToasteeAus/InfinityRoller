@@ -15,6 +15,7 @@ public class PlayerController : MonoBehaviour
     public float jumpforce = 1.2f;
     public bool isGrounded;
     public float threshold; // death y axis level
+    public GameObject SpawnPoint;
     //public Transform SpawnPoint;
     Camera m_MainCamera;
 
@@ -37,12 +38,12 @@ public class PlayerController : MonoBehaviour
 
         rb.AddForce(relativeMovement * speed); // Playermovement
 
-        //if (transform.position.y < threshold)
-        //{ // When the player falls off the edge, once it reaches the threshold they are respawned with 0 velocity and 0 speed
-          //  transform.position = SpawnPoint.position;
-            //GetComponent<Rigidbody>().velocity = Vector3.zero;
-            //GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
-        //}
+        if (transform.position.y < threshold)
+        { // When the player falls off the edge, once it reaches the threshold they are respawned with 0 velocity and 0 speed
+            transform.position = SpawnPoint.transform.position; // call to restart screen
+            GetComponent<Rigidbody>().velocity = Vector3.zero;
+            GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+        }
     }
 
     void OnCollisionStay() // Called whenever the ball hits a surface

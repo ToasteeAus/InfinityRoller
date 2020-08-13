@@ -4,17 +4,25 @@ using UnityEngine;
 
 public class GemHandler : MonoBehaviour
 {
+
+    public float amplitude = 1f;
+    public float speed = 5f;
+    private Rigidbody rb;
+    private Vector3 initialPos;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        rb = GetComponent<Rigidbody>();
+        initialPos = rb.position;
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         transform.Rotate(new Vector3(15, 30, 45) * Time.deltaTime);
-        transform.Translate(Vector3.up * 1, Space.World);
-        transform.Translate(Vector3.down * 1, Space.World);
+        float newY = Mathf.Sin(Time.time * speed) * amplitude;
+        Vector3 position = new Vector3(0, newY, 1) - initialPos;
+        rb.MovePosition(position);
     }
 }
